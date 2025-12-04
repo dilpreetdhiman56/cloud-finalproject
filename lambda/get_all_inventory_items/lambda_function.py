@@ -6,6 +6,7 @@ from decimal import Decimal
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("inventory") 
 
+
 # Encoder so Decimal values can be returned as JSON
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
