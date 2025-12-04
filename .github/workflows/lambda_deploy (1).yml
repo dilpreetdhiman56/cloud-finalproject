@@ -6,6 +6,10 @@ on:
       - 'main'
     paths:
       - 'lambda/get_all_inventory_items/lambda_function.py'
+      - 'lambda/get_inventory_item/lambda_function.py'
+      - 'lambda/get_location_inventory_items/lambda_function.py'
+      - 'lambda/delete_inventory_item/lambda_function.py'
+      - 'lambda/add_inventory_item/lambda_function.py'
 
 jobs:
   deploy:
@@ -13,6 +17,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
@@ -20,12 +25,68 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
+
+      # get_all_inventory_items
       - name: Zip the get_all_inventory_items Lambda function
         run: zip function.zip lambda_function.py
         working-directory: ./lambda/get_all_inventory_items
-      - name: Update Lambda function code
+
+      - name: Update get_all_inventory_items Lambda function code
         run: aws lambda update-function-code --function-name get_all_inventory_items --zip-file fileb://function.zip --publish
         working-directory: ./lambda/get_all_inventory_items
+
       - name: Cleanup get_all_inventory_items zip
         run: rm function.zip
         working-directory: ./lambda/get_all_inventory_items
+
+      # get_inventory_item
+      - name: Zip the get_inventory_item Lambda function
+        run: zip function.zip lambda_function.py
+        working-directory: ./lambda/get_inventory_item
+
+      - name: Update get_inventory_item Lambda function code
+        run: aws lambda update-function-code --function-name get_inventory_item --zip-file fileb://function.zip --publish
+        working-directory: ./lambda/get_inventory_item
+
+      - name: Cleanup get_inventory_item zip
+        run: rm function.zip
+        working-directory: ./lambda/get_inventory_item
+
+      # get_location_inventory_items
+      - name: Zip the get_location_inventory_items Lambda function
+        run: zip function.zip lambda_function.py
+        working-directory: ./lambda/get_location_inventory_items
+
+      - name: Update get_location_inventory_items Lambda function code
+        run: aws lambda update-function-code --function-name get_location_inventory_items --zip-file fileb://function.zip --publish
+        working-directory: ./lambda/get_location_inventory_items
+
+      - name: Cleanup get_location_inventory_items zip
+        run: rm function.zip
+        working-directory: ./lambda/get_location_inventory_items
+
+      # delete_inventory_item
+      - name: Zip the delete_inventory_item Lambda function
+        run: zip function.zip lambda_function.py
+        working-directory: ./lambda/delete_inventory_item
+
+      - name: Update delete_inventory_item Lambda function code
+        run: aws lambda update-function-code --function-name delete_inventory_item --zip-file fileb://function.zip --publish
+        working-directory: ./lambda/delete_inventory_item
+
+      - name: Cleanup delete_inventory_item zip
+        run: rm function.zip
+        working-directory: ./lambda/delete_inventory_item
+
+      # add_inventory_item
+      - name: Zip the add_inventory_item Lambda function
+        run: zip function.zip lambda_function.py
+        working-directory: ./lambda/add_inventory_item
+
+      - name: Update add_inventory_item Lambda function code
+        run: aws lambda update-function-code --function-name add_inventory_item --zip-file fileb://function.zip --publish
+        working-directory: ./lambda/add_inventory_item
+
+      - name: Cleanup add_inventory_item zip
+        run: rm function.zip
+        working-directory: ./lambda/add_inventory_item
