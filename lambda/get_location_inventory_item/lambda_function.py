@@ -3,6 +3,7 @@ import json
 from decimal import Decimal
 from boto3.dynamodb.conditions import Key
 
+
 # DynamoDB setup
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("inventory")

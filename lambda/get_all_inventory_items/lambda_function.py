@@ -2,6 +2,7 @@ import boto3
 import json
 from decimal import Decimal
 
+
 # DynamoDB setup
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("inventory") 
